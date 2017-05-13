@@ -16,7 +16,8 @@ This is a device as eyes of the blind in kitchen, intergraded with camera, micro
 **play_audio.py**: Play the audio file <br>
 **record_audio.py**: Record users' input speech through USB microphone <br>
 **photo_module.py**: Capture the photo from camera, perform image recognition and analyze color compositions <br>
-**speech.py**: Perform speech recognition, as well as speech-to-text and text-to-speech transformations
+**speech.py**: Perform speech recognition, as well as speech-to-text and text-to-speech transformations <br>
+**go.py**: The multi-threading codes to integrate all functions mentioned above
 
 
 
