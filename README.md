@@ -18,6 +18,13 @@ This is a device as eyes of the blind in kitchen, intergraded with camera, micro
 **photo_module.py**: Capture the photo from camera, perform image recognition and analyze color compositions <br>
 **speech.py**: Perform speech recognition, as well as speech-to-text and text-to-speech transformations <br>
 **go.py**: The multi-threading codes to integrate all functions mentioned above
+**audio_library**: Some audio files generated during our experiments
+**photo_samples**: Some photos captured during our experiments
+
+### Video Demo
+https://www.youtube.com/watch?v=2ehwnxFnJHo&feature=youtu.be
+
+### Weebly Website
 
 
 
