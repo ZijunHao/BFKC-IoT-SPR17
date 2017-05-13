@@ -8,6 +8,7 @@ import temperature as tpt
 import speechtotext as stt
 from library import *
 
+# For monitoring the surrounding environment from various perspectives at the same time, we used multi-threading codes to achieve this goal. Each thread is responsible for a specific function.
 threads = []
 
 t1 = threading.Thread(target=dis.distance_func)

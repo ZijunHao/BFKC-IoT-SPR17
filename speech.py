@@ -10,8 +10,9 @@ import play_audio as pa
 import photo_module as pm
 from library import *
 
+# **** Hide personal information for privacy concern
 speech_to_text = SpeechToTextV1(
-    username='eaf1****-****-****-****-********db5e',     # **** is used to hide personal information for privacy concern
+    username='eaf1****-****-****-****-********db5e',
     password='************',
     x_watson_learning_opt_out=False
 )
@@ -20,22 +21,30 @@ text_to_speech = TextToSpeechV1(
     password='************',
     x_watson_learning_opt_out=True)
 
+# Set the port number for buzzer
 buzzer = 8
 
-def main():   
+def main():
     assistant()
-            
+
+
 def assistant():
     name = texttospeech('how can I help you')
+
+    # Play audio "How can I help you?" in user's earphone
     pa.play(name)
+
+    # Let the user record his/her input voice
     filename = ra.record()
+
+    # Recognize and translate the user's input speech to text using IBM Bluemix NLP service
     speech2=speechtotext(filename)
 
     # speech2[0] returns the confidence of the text
     # speech2[1] returns the text content
-    # we assume that when confidence > 0.25, the user records effective audio
-    if speech2[0] > 0.25:
-        # if the user wants to set timer
+    # We assume that when confidence > 0.25, the user records effective audio
+    if Speech2[0] > 0.25:
+        # i\If the user wants to set timer
         if "time" in speech2[1]:
             texttospeech('how many minutes')
             pa.play('output.wav')
@@ -47,14 +56,14 @@ def assistant():
             else:
                 texttospeech('Sorry I do not understand')
                 pa.play('output.wav')
-        
-        # if the user wants to check the doneness of the food
+
+        # If the user wants to check the doneness of the food
         elif 'check' in speech2[1]:
             doneness = pm.well_done()
             texttospeech(doneness)
             pa.play('output.wav')
-        
-        # if the user wants to recognize the food
+
+        # If the user wants to recognize the food
         elif 'recognize' in speech2[1]:
             tmp = 'The labels for this object are'
             label_list = pm.what_is_it()
@@ -63,15 +72,19 @@ def assistant():
             texttospeech(tmp)
             pa.play('output.wav')
 
+        # We ignore all other kinds of input speech
         else:
             texttospeech('Sorry I do not understand')
             pa.play('output.wav')
+
+    # The confidence value is too low, we ignore this input
     else:
         texttospeech('Sorry I do not understand')
         pa.play('output.wav')
         time.sleep(30)
 
-        
+
+# This is the function used to set a timer (minutes)
 def set_timer(settime):
     mins = 0
     timer = settime
@@ -79,14 +92,17 @@ def set_timer(settime):
         time.sleep(60)
         mins += 1
 
+    # When time is up, the buzzer will sound
     digitalWrite(buzzer,1)
     time.sleep(3)
     digitalWrite(buzzer,0)
 
+    # When time is up, play "time up!" audio in user's earphone
     name = texttospeech('time up')
     pa.play(name)
-    
 
+
+# This is the function used to recognize and translate user's input speech into text through IBM Bluemix NLP library
 def speechtotext(audio):
     try:
         with open(join(dirname(__file__), audio),
@@ -102,6 +118,7 @@ def speechtotext(audio):
     return [confidence,transcript]
 
 
+# This is the function used to transform text into corresponding speech through IBM Bluemix NLP library
 def texttospeech(text):
     with open(join(dirname(__file__), 'output.wav'),
           'wb') as audio_file:
@@ -109,7 +126,7 @@ def texttospeech(text):
             text_to_speech.synthesize(text, accept='audio/wav',
                                   voice="en-US_AllisonVoice"))
 
-                                
+
 if __name__ =="__main__":
     main()
-		
+
